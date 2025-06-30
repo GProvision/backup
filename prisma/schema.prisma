@@ -1,0 +1,247 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model archivos {
+  id_archivo          Int   @unique(map: "id_archivo") @default(autoincrement())
+  id_sub_departamento Int
+  // fecha_vigencia      DateTime @db.Timestamp(0)
+  observacion         String   @db.Text
+  nombre_archivo      String   @db.Text
+  ruta                String   @db.Text
+  tipo                String   @db.Text
+  size                Float    @db.Float
+  file_ext            String   @db.Text
+  ancho               Int
+  largo               Int
+  fecha_carga         DateTime @default(now()) @db.Timestamp(0)
+  borrado             Int      @default(0)
+}
+
+model bruteforce_ip {
+  id            Int  @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  ip_address    String  @db.Text
+  last_activity Int
+  blocked       Boolean
+  fails         Int
+}
+
+model captcha {
+  captcha_id   Int @unique(map: "captcha_id") @default(autoincrement()) @db.UnsignedInt
+  captcha_time Int
+  ip_address   String @db.Text
+  word         String @db.Text
+}
+
+model clientes {
+  id_cliente           Int     @id @default(autoincrement())
+  titular_cliente      String? @db.VarChar(60)
+  beneficiario_cliente String? @db.VarChar(60)
+  nro_cliente          String? @db.VarChar(30)
+  dni                  String? @db.VarChar(20)
+  id_sindicato_cliente Int
+  activo               Int     @default(1)
+}
+
+model delegacion {
+  id_delegacion Int @id @unique(map: "id_delegacion") @default(autoincrement()) @db.UnsignedInt
+  descripcion   String @db.VarChar(100)
+  activo        Int    @default(1)
+}
+
+model fichas {
+  id_ficha              Int   @id @unique(map: "id_ficha") @default(autoincrement()) @db.UnsignedInt
+  beneficiario          String   @db.VarChar(100)
+  nro_cliente           String   @db.Text
+  dni                   String   @db.VarChar(50)
+  id_cliente            Int
+  id_sindicato          Int
+  id_delegacion         Int
+  id_optica             Int
+  fecha                 DateTime @db.Date
+  codigo_armazon        String   @db.VarChar(100)
+  color_armazon         String   @db.VarChar(100)
+  id_stock              Int
+  estado                String   @db.VarChar(100)
+  voucher               String   @db.VarChar(100)
+  nro_pedido            String   @db.VarChar(100)
+  grad_od_esf           String   @db.VarChar(100)
+  grad_od_cil           String   @db.VarChar(100)
+  eje_od                String   @db.VarChar(100)
+  grad_oi_esf           String   @db.VarChar(100)
+  grad_oi_cil           String   @db.VarChar(100)
+  eje_oi                String   @db.VarChar(100)
+  tipo_lente            Int
+  // fecha_envio           DateTime @db.Date
+  comentario            String   @db.Text
+  codigo_armazon_cerca  String   @db.VarChar(100)
+  color_armazon_cerca   String   @db.VarChar(100)
+  id_stock_cerca        Int
+  grad_od_esf_cerca     String   @db.VarChar(100)
+  grad_od_cil_cerca     String   @db.VarChar(100)
+  eje_od_cerca          String   @db.VarChar(100)
+  grad_oi_esf_cerca     String   @db.VarChar(100)
+  grad_oi_cil_cerca     String   @db.VarChar(100)
+  eje_oi_cerca          String   @db.VarChar(100)
+  id_estado_cerca       Int
+  voucher_cerca         String   @db.VarChar(100)
+  nro_pedido_cerca      String   @db.VarChar(100)
+  tipo_lente_cerca      Int
+  // fecha_envio_cerca     DateTime @db.Date
+  es_lejos              Int
+  adicional             String   @db.VarChar(255)
+  descripcion_adicional String   @db.VarChar(100)
+  telefono              String   @db.VarChar(50)
+  costo_adicional       Float
+  sena_adicional        Float
+  saldo_adicional       Float
+  es_casa_central       Int      @default(0)
+  adicional_cerca       String   @db.VarChar(255)
+  costo_adicional_cerca Float
+  laboratorio           Int
+  laboratorio_cerca     Int
+  codigo_barra          String   @db.VarChar(50)
+  codigo_barra_cerca    String   @db.VarChar(50)
+  activo                Int      @default(1)
+}
+
+model log {
+  id          Int   @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  fecha       DateTime @default(now()) @db.Timestamp(0)
+  id_usuario  Int
+  id_tipo_log Int
+}
+
+model log_cambios_estados {
+  id           Int   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  nro_pedido   String   @db.VarChar(100)
+  codigo_barra String   @db.VarChar(100)
+  fecha        DateTime @default(now()) @db.Date
+  estado       Int
+  volvio_lab   Int
+}
+
+model log_clientes {
+  id          Int   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id_cliente  Int
+  fecha       DateTime @default(now()) @db.Timestamp(0)
+  id_usuario  Int
+  id_tipo_log Int
+}
+
+model log_enviados {
+  id           Int   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  fecha_accion DateTime @default(now()) @db.Timestamp(0)
+  id_ficha     Int
+  fecha_envio  DateTime @db.DateTime(0)
+  es_lejos     Int
+}
+
+model log_fichas {
+  id          Int   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id_ficha    Int
+  fecha       DateTime @default(now()) @db.Timestamp(0)
+  id_usuario  Int
+  id_tipo_log Int
+}
+
+model log_sindicatos {
+  id           Int   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id_sindicato Int
+  fecha        DateTime @default(now()) @db.Timestamp(0)
+  id_usuario   Int
+  id_tipo_log  Int
+}
+
+model log_stock {
+  id          Int   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id_stock    Int
+  fecha       DateTime @default(now()) @db.Timestamp(0)
+  id_usuario  Int
+  id_tipo_log Int
+}
+
+model material {
+  id          Int     @id @default(autoincrement())
+  descripcion String? @db.Text
+}
+
+model opticas {
+  id_optica     Int @id @unique(map: "id_optica") @default(autoincrement()) @db.UnsignedInt
+  descripcion   String @db.VarChar(100)
+  id_delegacion Int
+  activo        Int    @default(1)
+}
+
+model rol {
+  id_rol      Int @id @default(autoincrement())
+  descripcion String @db.Text
+}
+
+model sesion {
+  session_id    String @unique(map: "session_id", length: 50) @db.Text
+  ip_address    String @db.Text
+  user_agent    String @db.Text
+  last_activity Int    @default(0)
+  user_data     String @db.Text
+}
+
+model sindicatos {
+  id_sindicato Int @id @unique(map: "id_sindicato") @default(autoincrement()) @db.UnsignedInt
+  descripcion  String @db.VarChar(100)
+  activo       Int    @default(1)
+}
+
+model stock {
+  id_stock            Int  @id @unique(map: "id_stock") @default(autoincrement()) @db.UnsignedInt
+  codigo_patilla      String? @db.Text
+  codigo_color        String? @db.Text
+  descripcion_color   String? @db.Text
+  nro_codigo_interno  String? @db.VarChar(100)
+  letra_color_interno String? @db.VarChar(50)
+  id_tipo_armazon     Int?
+  id_material         Int?
+  id_ubicacion        Int?
+  cantidad            Int?
+  cantidad_minima     Int
+  costo               Float?
+  precio_venta        Float?
+  activo              Int     @default(1)
+}
+
+model tipo_armazon {
+  id_tipo_armazon Int     @id @default(autoincrement())
+  descripcion     String? @db.Char(4)
+}
+
+model tipo_lentes {
+  id          Int @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  descripcion String @db.VarChar(100)
+}
+
+model tipo_log {
+  id     Int @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  nombre String @db.Text
+}
+
+model ubicacion {
+  id          Int     @id @default(autoincrement())
+  descripcion String? @db.Text
+}
+
+model usuario {
+  id_usuario  Int @id @default(autoincrement())
+  nombre      String @db.Text
+  apellido    String @db.Text
+  user_name   String @db.Text
+  contrasenia String @db.Text
+  mail        String @db.Text
+  id_rol      Int
+  activo      Int
+}
