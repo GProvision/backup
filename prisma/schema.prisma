@@ -9,9 +9,9 @@ datasource db {
 }
 
 model archivos {
-  id_archivo          Int   @unique(map: "id_archivo") @default(autoincrement())
+  id_archivo          BigInt   @unique(map: "id_archivo") @default(autoincrement()) @db.UnsignedBigInt
   id_sub_departamento Int
-  // fecha_vigencia      DateTime @db.Timestamp(0)
+  fecha_vigencia      DateTime @db.Date
   observacion         String   @db.Text
   nombre_archivo      String   @db.Text
   ruta                String   @db.Text
@@ -25,7 +25,7 @@ model archivos {
 }
 
 model bruteforce_ip {
-  id            Int  @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id            BigInt  @unique(map: "id") @default(autoincrement()) @db.UnsignedBigInt
   ip_address    String  @db.Text
   last_activity Int
   blocked       Boolean
@@ -33,7 +33,7 @@ model bruteforce_ip {
 }
 
 model captcha {
-  captcha_id   Int @unique(map: "captcha_id") @default(autoincrement()) @db.UnsignedInt
+  captcha_id   BigInt @unique(map: "captcha_id") @default(autoincrement()) @db.UnsignedBigInt
   captcha_time Int
   ip_address   String @db.Text
   word         String @db.Text
@@ -50,76 +50,76 @@ model clientes {
 }
 
 model delegacion {
-  id_delegacion Int @id @unique(map: "id_delegacion") @default(autoincrement()) @db.UnsignedInt
+  id_delegacion BigInt @id @unique(map: "id_delegacion") @default(autoincrement()) @db.UnsignedBigInt
   descripcion   String @db.VarChar(100)
   activo        Int    @default(1)
 }
 
 model fichas {
-  id_ficha              Int   @id @unique(map: "id_ficha") @default(autoincrement()) @db.UnsignedInt
-  beneficiario          String   @db.VarChar(100)
-  nro_cliente           String   @db.Text
-  dni                   String   @db.VarChar(50)
+  id_ficha              BigInt @id @unique(map: "id_ficha") @default(autoincrement()) @db.UnsignedBigInt
+  beneficiario          String @db.VarChar(100)
+  nro_cliente           String @db.Text
+  dni                   String @db.VarChar(50)
   id_cliente            Int
   id_sindicato          Int
   id_delegacion         Int
   id_optica             Int
-  fecha                 DateTime @db.Date
-  codigo_armazon        String   @db.VarChar(100)
-  color_armazon         String   @db.VarChar(100)
+  fecha                 String @db.Text
+  codigo_armazon        String @db.VarChar(100)
+  color_armazon         String @db.VarChar(100)
   id_stock              Int
-  estado                String   @db.VarChar(100)
-  voucher               String   @db.VarChar(100)
-  nro_pedido            String   @db.VarChar(100)
-  grad_od_esf           String   @db.VarChar(100)
-  grad_od_cil           String   @db.VarChar(100)
-  eje_od                String   @db.VarChar(100)
-  grad_oi_esf           String   @db.VarChar(100)
-  grad_oi_cil           String   @db.VarChar(100)
-  eje_oi                String   @db.VarChar(100)
+  estado                String @db.VarChar(100)
+  voucher               String @db.VarChar(100)
+  nro_pedido            String @db.VarChar(100)
+  grad_od_esf           String @db.VarChar(100)
+  grad_od_cil           String @db.VarChar(100)
+  eje_od                String @db.VarChar(100)
+  grad_oi_esf           String @db.VarChar(100)
+  grad_oi_cil           String @db.VarChar(100)
+  eje_oi                String @db.VarChar(100)
   tipo_lente            Int
-  // fecha_envio           DateTime @db.Date
-  comentario            String   @db.Text
-  codigo_armazon_cerca  String   @db.VarChar(100)
-  color_armazon_cerca   String   @db.VarChar(100)
+  fecha_envio           String @db.Text
+  comentario            String @db.Text
+  codigo_armazon_cerca  String @db.VarChar(100)
+  color_armazon_cerca   String @db.VarChar(100)
   id_stock_cerca        Int
-  grad_od_esf_cerca     String   @db.VarChar(100)
-  grad_od_cil_cerca     String   @db.VarChar(100)
-  eje_od_cerca          String   @db.VarChar(100)
-  grad_oi_esf_cerca     String   @db.VarChar(100)
-  grad_oi_cil_cerca     String   @db.VarChar(100)
-  eje_oi_cerca          String   @db.VarChar(100)
+  grad_od_esf_cerca     String @db.VarChar(100)
+  grad_od_cil_cerca     String @db.VarChar(100)
+  eje_od_cerca          String @db.VarChar(100)
+  grad_oi_esf_cerca     String @db.VarChar(100)
+  grad_oi_cil_cerca     String @db.VarChar(100)
+  eje_oi_cerca          String @db.VarChar(100)
   id_estado_cerca       Int
-  voucher_cerca         String   @db.VarChar(100)
-  nro_pedido_cerca      String   @db.VarChar(100)
+  voucher_cerca         String @db.VarChar(100)
+  nro_pedido_cerca      String @db.VarChar(100)
   tipo_lente_cerca      Int
-  // fecha_envio_cerca     DateTime @db.Date
+  fecha_envio_cerca     String @db.Text
   es_lejos              Int
-  adicional             String   @db.VarChar(255)
-  descripcion_adicional String   @db.VarChar(100)
-  telefono              String   @db.VarChar(50)
+  adicional             String @db.VarChar(255)
+  descripcion_adicional String @db.VarChar(100)
+  telefono              String @db.VarChar(50)
   costo_adicional       Float
   sena_adicional        Float
   saldo_adicional       Float
-  es_casa_central       Int      @default(0)
-  adicional_cerca       String   @db.VarChar(255)
+  es_casa_central       Int    @default(0)
+  adicional_cerca       String @db.VarChar(255)
   costo_adicional_cerca Float
   laboratorio           Int
   laboratorio_cerca     Int
-  codigo_barra          String   @db.VarChar(50)
-  codigo_barra_cerca    String   @db.VarChar(50)
-  activo                Int      @default(1)
+  codigo_barra          String @db.VarChar(50)
+  codigo_barra_cerca    String @db.VarChar(50)
+  activo                Int    @default(1)
 }
 
 model log {
-  id          Int   @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id          BigInt   @unique(map: "id") @default(autoincrement()) @db.UnsignedBigInt
   fecha       DateTime @default(now()) @db.Timestamp(0)
   id_usuario  Int
   id_tipo_log Int
 }
 
 model log_cambios_estados {
-  id           Int   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id           BigInt   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedBigInt
   nro_pedido   String   @db.VarChar(100)
   codigo_barra String   @db.VarChar(100)
   fecha        DateTime @default(now()) @db.Date
@@ -128,7 +128,7 @@ model log_cambios_estados {
 }
 
 model log_clientes {
-  id          Int   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id          BigInt   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedBigInt
   id_cliente  Int
   fecha       DateTime @default(now()) @db.Timestamp(0)
   id_usuario  Int
@@ -136,7 +136,7 @@ model log_clientes {
 }
 
 model log_enviados {
-  id           Int   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id           BigInt   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedBigInt
   fecha_accion DateTime @default(now()) @db.Timestamp(0)
   id_ficha     Int
   fecha_envio  DateTime @db.DateTime(0)
@@ -144,7 +144,7 @@ model log_enviados {
 }
 
 model log_fichas {
-  id          Int   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id          BigInt   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedBigInt
   id_ficha    Int
   fecha       DateTime @default(now()) @db.Timestamp(0)
   id_usuario  Int
@@ -152,7 +152,7 @@ model log_fichas {
 }
 
 model log_sindicatos {
-  id           Int   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id           BigInt   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedBigInt
   id_sindicato Int
   fecha        DateTime @default(now()) @db.Timestamp(0)
   id_usuario   Int
@@ -160,7 +160,7 @@ model log_sindicatos {
 }
 
 model log_stock {
-  id          Int   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id          BigInt   @id @unique(map: "id") @default(autoincrement()) @db.UnsignedBigInt
   id_stock    Int
   fecha       DateTime @default(now()) @db.Timestamp(0)
   id_usuario  Int
@@ -173,14 +173,14 @@ model material {
 }
 
 model opticas {
-  id_optica     Int @id @unique(map: "id_optica") @default(autoincrement()) @db.UnsignedInt
+  id_optica     BigInt @id @unique(map: "id_optica") @default(autoincrement()) @db.UnsignedBigInt
   descripcion   String @db.VarChar(100)
   id_delegacion Int
   activo        Int    @default(1)
 }
 
 model rol {
-  id_rol      Int @id @default(autoincrement())
+  id_rol      BigInt @id @unique(map: "id_rol") @default(autoincrement()) @db.UnsignedBigInt
   descripcion String @db.Text
 }
 
@@ -193,13 +193,13 @@ model sesion {
 }
 
 model sindicatos {
-  id_sindicato Int @id @unique(map: "id_sindicato") @default(autoincrement()) @db.UnsignedInt
+  id_sindicato BigInt @id @unique(map: "id_sindicato") @default(autoincrement()) @db.UnsignedBigInt
   descripcion  String @db.VarChar(100)
   activo       Int    @default(1)
 }
 
 model stock {
-  id_stock            Int  @id @unique(map: "id_stock") @default(autoincrement()) @db.UnsignedInt
+  id_stock            BigInt  @id @unique(map: "id_stock") @default(autoincrement()) @db.UnsignedBigInt
   codigo_patilla      String? @db.Text
   codigo_color        String? @db.Text
   descripcion_color   String? @db.Text
@@ -221,12 +221,12 @@ model tipo_armazon {
 }
 
 model tipo_lentes {
-  id          Int @id @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id          BigInt @id @unique(map: "id") @default(autoincrement()) @db.UnsignedBigInt
   descripcion String @db.VarChar(100)
 }
 
 model tipo_log {
-  id     Int @unique(map: "id") @default(autoincrement()) @db.UnsignedInt
+  id     BigInt @unique(map: "id") @default(autoincrement()) @db.UnsignedBigInt
   nombre String @db.Text
 }
 
@@ -236,7 +236,7 @@ model ubicacion {
 }
 
 model usuario {
-  id_usuario  Int @id @default(autoincrement())
+  id_usuario  BigInt @unique(map: "id_usuario") @default(autoincrement()) @db.UnsignedBigInt
   nombre      String @db.Text
   apellido    String @db.Text
   user_name   String @db.Text

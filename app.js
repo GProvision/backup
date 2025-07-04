@@ -1,24 +1,29 @@
 import express from "express";
 import cors from "cors";
-
+import { PrismaClient } from "./generated/prisma/client/index.js";
+const prisma = new PrismaClient();
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(async (req, res, next) => {
+  // verificar conexion a base de datos
+  try {
+    await prisma.$connect();
+    console.log("Conectado a la base de datos");
+    next();
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Error al conectar a la base de datos" });
+  }
+});
 
-import utils from "./utils.js";
-app.get("/archivos", utils.getArchivos);
-app.get("/usuarios", utils.getUsuarios);
-app.get("/fichas/:tipo", utils.getFichas);
-app.get("/stock", utils.getStock);
-app.get("/lentes", utils.getTipoLentes);
-app.get("/sindicatos", utils.getSindicatos);
-app.get("/delegacion", utils.getDelegacion);
-app.get("/roles", utils.getRoles);
-app.get("/clientes", utils.getClientes);
-app.get("/opticas", utils.getOpticas);
-app.get("/fichas", utils.getAllFichas);
+import { getFichas } from "./utils.js";
+app.get("/fichas", getFichas);
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+app.listen(process.env.PORT || 3000, () => {
+  console.log(
+    `Server running on port http://localhost:${process.env.PORT || 3000}`
+  );
 });
