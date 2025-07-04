@@ -37,4 +37,3 @@ export const getFichas = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-// filtrar por el numero de afiliado de la ficha
