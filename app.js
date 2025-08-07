@@ -19,8 +19,9 @@ app.use(async (req, res, next) => {
   }
 });
 
-import { getFichas } from "./utils.js";
+import { getFichas, getUtedyc } from "./utils.js";
 app.get("/fichas", getFichas);
+app.get("/utedyc", getUtedyc);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(
