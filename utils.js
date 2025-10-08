@@ -71,10 +71,41 @@ export const getUtedyc = async (req, res) => {
       fecha: true,
       nro_pedido: true,
     };
-    // options.take = 10;
-    // options.skip = 0;
     let fichas = await prisma.fichas.findMany(options);
     res.status(200).json({ fichas });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getTypesArmazones = async (req, res) => {
+  try {
+    const types = await prisma.tipo_armazon.findMany({
+      select: { descripcion: true },
+    });
+    res.status(200).json(types);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getTypesMaterials = async (req, res) => {
+  try {
+    const types = await prisma.material.findMany({
+      select: { descripcion: true },
+    });
+    res.status(200).json(types);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getUbicaciones = async (req, res) => {
+  try {
+    const types = await prisma.ubicacion.findMany({
+      select: { descripcion: true },
+    });
+    res.status(200).json(types);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

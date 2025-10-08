@@ -19,12 +19,21 @@ app.use(async (req, res, next) => {
   }
 });
 
-import { getFichas, getUtedyc } from "./utils.js";
+import {
+  getFichas,
+  getUtedyc,
+  getTypesArmazones,
+  getTypesMaterials,
+  getUbicaciones,
+} from "./utils.js";
 app.get("/fichas", getFichas);
 app.get("/utedyc", getUtedyc);
+app.get("/tipos/armazones", getTypesArmazones);
+app.get("/tipos/materiales", getTypesMaterials);
+app.get("/tipos/ubicaciones", getUbicaciones);
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log(
-    `Server running on port http://localhost:${process.env.PORT || 3000}`
+    `Server running on port http://localhost:${process.env.PORT || 3001}`
   );
 });
