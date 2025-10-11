@@ -26,7 +26,6 @@ import {
   getTypesMaterials,
   getUbicaciones,
   getTypesLens,
-  getTypesStates,
 } from "./utils.js";
 app.get("/fichas", getFichas);
 app.get("/utedyc", getUtedyc);
