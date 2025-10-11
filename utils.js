@@ -110,3 +110,31 @@ export const getUbicaciones = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const getTypesLens = async (req, res) => {
+  try {
+    const types = await prisma.tipo_lentes.findMany({
+      select: descripcion,
+    });
+    res.status(200).json(types);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getTypesLabs = async (req, res) => {
+  try {
+    const types = await prisma.fichas.findMany({
+      select: { laboratorio: true, laboratorio_cerca: true },
+    });
+    let labs = [];
+    const typeLabs = [...new Set(types.map(({ laboratorio }) => laboratorio))];
+    const typeLabsNear = [
+      ...new Set(types.map(({ laboratorio_cerca }) => laboratorio_cerca)),
+    ];
+    labs = [...new Set(typeLabs.concat(typeLabsNear))];
+    res.status(200).json(labs);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
