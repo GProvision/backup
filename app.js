@@ -26,7 +26,7 @@ import {
   getTypesMaterials,
   getUbicaciones,
   getTypesLens,
-  getTypesLabs,
+  getTypesStates,
 } from "./utils.js";
 app.get("/fichas", getFichas);
 app.get("/utedyc", getUtedyc);
@@ -34,7 +34,6 @@ app.get("/tipos/armazones", getTypesArmazones);
 app.get("/tipos/materiales", getTypesMaterials);
 app.get("/tipos/ubicaciones", getUbicaciones);
 app.get("/tipos/lentes", getTypesLens);
-app.get("/tipos/laboratorios", getTypesLabs);
 
 app.listen(process.env.PORT || 3001, () => {
   console.log(
