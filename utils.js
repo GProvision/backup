@@ -123,3 +123,19 @@ export const getTypesLens = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const getStocks = async (req, res) => {
+  try {
+    const data = await prisma.stock.findMany({
+      select: {
+        codigo_patilla: true,
+        codigo_color: true,
+        nro_codigo_interno: true,
+        letra_color_interno: true,
+      },
+    });
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
